@@ -1,18 +1,11 @@
 import type { Metadata } from "next";
-import localFont from "next/font/local"
+import { Inter } from "next/font/google";
 import "./globals.css";
-import Navbar from "./components/Navbar/Navbar";
+import Navbar from "./components/navbar/Navbar";
+import LoginModal from "./components/modals/LoginModal";
+import SignupModal from "./components/modals/SignupModal";
 
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
-});
-const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-  weight: "100 900",
-});
+const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "DjangoBnb",
@@ -24,16 +17,21 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const content = (
+    <p>Yo yo</p>
+  )
+
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        <Navbar/>
-        <div className="pt-32">
-        {children}
-        </div>
+      <body className={inter.className}>
+        <Navbar />
         
+        <div className="pt-32">
+          {children}
+        </div>
+
+        <LoginModal />
+        <SignupModal />
       </body>
     </html>
   );
