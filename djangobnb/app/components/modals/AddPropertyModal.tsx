@@ -3,6 +3,7 @@ import Image from "next/image";
 import Modal from "./Modal";
 
 import useAddPropertyModal from "@/app/hooks/useAddPropertyModal";
+import LoginModal from "./LoginModal";
 
 const AddPropertyModal = () => {
   const addPropertyModal = useAddPropertyModal();
