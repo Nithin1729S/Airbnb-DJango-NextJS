@@ -22,10 +22,13 @@ def properties_list(request):
 @api_view(['GET'])
 @authentication_classes([])
 @permission_classes([])
-def property_detail(request,pk):
-    property=Property.objects.get(pk=pk)
-    serializer=PropertiesDetailSerializer(property,many=False)
-    return JsonResponse(serializer.data)
+def properties_detail(request, pk):
+    try:
+        property = Property.objects.get(pk=pk)
+        serializer = PropertiesDetailSerializer(property)
+        return JsonResponse(serializer.data)
+    except Property.DoesNotExist:
+        return JsonResponse({'error': 'Property not found'}, status=404)
 
 
 
