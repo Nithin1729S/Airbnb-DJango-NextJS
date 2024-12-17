@@ -59,7 +59,7 @@ const AddPropertyModal = () => {
       formData.append("image", dataImage);
 
       const response = await apiService.post(
-        "/api/properties/create",
+        "/api/properties/create/",
         formData
       );
       if (response.success) {
@@ -202,7 +202,7 @@ const AddPropertyModal = () => {
             className="mb-2 bg-black hover:bg-gray-800"
             onClick={() => setCurrentStep(4)}
           />
-          <CustomButton label="Submit" onClick={() => console.log("Submit")} />
+          <CustomButton label="Submit" onClick={submitForm} />
         </>
       )}
     </>
