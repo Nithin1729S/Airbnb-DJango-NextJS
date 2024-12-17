@@ -3,7 +3,7 @@ from django.http import JsonResponse
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
 from rest_framework_simplejwt.tokens import AccessToken
 from .models import Property, Reservation
-from .serializers import PropertiesListSerializer
+from .serializers import PropertiesDetailSerializer, PropertiesListSerializer
 from useraccount.models import User
 from .forms import PropertyForm
 
@@ -17,6 +17,20 @@ def properties_list(request):
     return JsonResponse({
         'data':serializer.data
     })
+
+
+@api_view(['GET'])
+@authentication_classes([])
+@permission_classes([])
+def property_detail(request,pk):
+    property=Property.objects.get(pk=pk)
+    serializer=PropertiesDetailSerializer(property,many=False)
+    return JsonResponse(serializer.data)
+
+
+
+
+
 
 @api_view(['POST','FILES'])
 def create_property(request):
@@ -34,3 +48,5 @@ def create_property(request):
         return JsonResponse({
             'error':form.errors.as_json(),
         },status=400)
+    
+
