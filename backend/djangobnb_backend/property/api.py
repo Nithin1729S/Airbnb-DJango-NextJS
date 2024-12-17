@@ -3,7 +3,7 @@ from django.http import JsonResponse
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
 from rest_framework_simplejwt.tokens import AccessToken
 from .models import Property, Reservation
-from .serializers import PropertiesDetailSerializer, PropertiesListSerializer
+from .serializers import PropertiesDetailSerializer, PropertiesListSerializer, ReservationsListSerializer
 from useraccount.models import User
 from .forms import PropertyForm
 
@@ -31,7 +31,14 @@ def properties_detail(request, pk):
         return JsonResponse({'error': 'Property not found'}, status=404)
 
 
-
+@api_view(['GET'])
+@authentication_classes([])
+@permission_classes([])
+def property_reservations(request,pk):
+    property=Property.objects.get(pk=pk)
+    reservations=property.reservations.all()
+    serializer=ReservationsListSerializer(reservations,many=True)
+    return JsonResponse(serializer.data,safe=False)
 
 
 
@@ -72,6 +79,7 @@ def book_property(request,pk):
             guests=guests,
             created_by=request.user
         )
+        return JsonResponse({'success':True})
     except Exception as e:
         print("error",e)
         return JsonResponse({'success':False},status=400)
