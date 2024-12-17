@@ -12,8 +12,10 @@ from .forms import PropertyForm
 @permission_classes([])
 def properties_list(request):
     properties=Property.objects.all()
+    landloard_id=request.GET.get('landlord_id','')
+    if landloard_id:
+        properties=Property.objects.filter(landlord=landloard_id)
     serializer=PropertiesListSerializer(properties,many=True)
-
     return JsonResponse({
         'data':serializer.data
     })
